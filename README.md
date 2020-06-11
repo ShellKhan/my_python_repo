@@ -1,2 +1,2 @@
 # my_python_repo
-My python repo for homeworks/
+My python repo for homeworks.

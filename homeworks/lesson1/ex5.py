@@ -11,4 +11,3 @@ elif user_income == user_outcome:
     print("Вы выходите в ноль")
 else:
     print("Вы работаете в убыток")
-

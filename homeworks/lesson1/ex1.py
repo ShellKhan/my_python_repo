@@ -18,4 +18,3 @@ var_str_2 = "это тоже строка"
 var_str_input = input('Введите строку: ')
 print(var_str_1 + ' и ' + var_str_2)
 print(var_str_input * 3)
-

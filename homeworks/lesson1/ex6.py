@@ -8,4 +8,3 @@ while result < last_day:
     counter = counter + 1
     result = result * (multiplier + 1)
 print(f"На {counter}-й день вы достигнете результата не менее {last_day} км.")
-

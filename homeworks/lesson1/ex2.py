@@ -16,4 +16,3 @@ if horas < 10:
 print('Ваше время - %s:%s:%s' % (horas, minutes, secundis))
 print('Ваше время - {2}:{1}:{0}'.format(secundis, minutes, horas))
 print(f"Ваше время - {horas}:{minutes}:{secundis}")
-

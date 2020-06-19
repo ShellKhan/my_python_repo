@@ -17,4 +17,3 @@ while user_last_digit != user_num:
     if user_last_digit > user_answer:
         user_answer = user_last_digit
 print(f'Ваша самая большая цифра - {user_answer}')
-

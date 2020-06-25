@@ -1,18 +1,23 @@
-# не понял насчет списка, определенного заранее. если можно, после занятия переделаю этот момент
-
+# в качестве списка я использовал строку, так как она все равно что список букв
+# параметр при запуске - число выводимых букв
+# обработку неправильного параметра не делал: если не число - пусть валится.
+from itertools import cycle
 from sys import argv
 
-my_arg = argv[1:]
-try:
-    my_list = list(my_arg)
-except:
-    my_list = [0, 0, 0]
+_, my_stop = argv
+my_line = 'qwertyuiop'
+my_stop = int(my_stop)
 
 
-def my_iterator(source: list) -> int:
-    for el in source:
-        yield el
+def my_iterator(source: str, stop: int) -> int:
+    counter = 1
+    for el in cycle(source):
+        if counter <= stop:
+            yield el
+            counter += 1
+        else:
+            break
 
 
-my_print_var = list(my_iterator(my_list))
+my_print_var = list(my_iterator(my_line, my_stop))
 print(my_print_var)

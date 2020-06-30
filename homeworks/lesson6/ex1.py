@@ -8,7 +8,8 @@ class TrafficLight:
         from time import sleep
         print('Program started')
         for index in cycle([0, 1, 2]):
-            print('Color goes ' + self.COLORS[index])
+            self.__color = self.COLORS[index]
+            print('Color goes ' + self.__color)
             count -= 1
             if not count:
                 print('Program stopped')

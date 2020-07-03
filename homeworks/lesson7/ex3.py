@@ -1,12 +1,10 @@
 # encoding: utf-8
 class Cell:
-    quantity = 0
-    units = 0
-    NOT_CELLS_ERROR = 'Для этой операции требуются две клетки!'
+    NOT_CELLS_ERROR = 'Для этой операции требуются две клетки.'
+    NOT_ENOUGH_UNITS = 'Операция невозможна: в результате нет ячеек.'
 
     def __init__(self, units):
         self.units = units
-        Cell.quantity += 1
 
     def __add__(self, other):
         if type(other) != Cell:
@@ -17,7 +15,7 @@ class Cell:
         if type(other) != Cell:
             raise TypeError(NOT_CELLS_ERROR)
         if self.units <= other.units:
-            raise ValueError('Вычитаемая клетка слишком велика')
+            raise ValueError(NOT_ENOUGH_UNITS)
         return Cell(self.units - other.units)
 
     def __mul__(self, other):
@@ -29,11 +27,11 @@ class Cell:
         if type(other) != Cell:
             raise TypeError(NOT_CELLS_ERROR)
         if not self.units // other.units:
-            raise ValueError('Получилась клетка с нулем ячеек!')
+            raise ValueError(NOT_ENOUGH_UNITS)
         return Cell(self.units // other.units)
 
     def make_order(self, length):
-        return ''.join(['*' + ('\n' * (not (num + 1) % length)) for num in range(self.units)])
+        return ''.join(['*' + ('\n' * (not (num + 1) % length) * (num != self.units - 1)) for num in range(self.units)])
 
 
 cell1 = Cell(15)
@@ -41,7 +39,6 @@ cell2 = Cell(10)
 cell3 = Cell(5)
 cell4 = Cell(12)
 cell5 = Cell(13)
-print(Cell.quantity)
 
 sum = cell1 + cell2
 sub = cell1 - cell3

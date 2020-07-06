@@ -1,4 +1,16 @@
 # encoding: utf-8
+"""
+Тут решения задач 4, 5 и 6 вместе. Я немножко упростился, так как не смог придумать связный пример для каких-то
+уникальных характеристик классов - просто сделал словарь для любых вообще характеристик кроме типа.
+Зато учет сделал индивидуализированным - каждый экземпляр можно поименовать и потом найти по имени.
+Также сделал поиск по типу - если такое имеется, выводится количество.
+С пользовательским вводом маленько поленился (если это очень надо, доделаю, но мы же его кучу раз уже делали,
+так что это, уж извините, скучно).
+А вместо того прикрутил проверку на наличие техники, отправляемой на другой склад - если чего-то не хватает,
+отправляется только найденное и выводится отчет, чего именно не нашлось.
+"""
+
+
 class Equip:
     type = ''
 
@@ -26,7 +38,7 @@ class Plotter(Equip):
 
 
 class Warehouse:
-    NO_ITEM_WARNING = '\nна этом складе нет такой единицы оргтехники:'
+    NO_ITEM_WARNING = '\nна этом складе нет такой единицы оргтехники'
     avail = {}
     quantity = {}
 
@@ -61,14 +73,26 @@ class Warehouse:
                 success.append(unit)
             except ValueError:
                 errors.append(str(unit))
-                print(self.NO_ITEM_WARNING)
-                print(str(unit))
+                print(self.NO_ITEM_WARNING + ' - ' + str(unit))
         return {'success': success, 'errors': errors}
 
     def move_to_filial(self, item_list, filial):
         report = self.remove_items(item_list)
         filial.add_items(report['success'])
-        print(f'\nУспешно передано:\n{[str(unit) for unit in report["success"]]}\nНе найдено на складе:\n{report["errors"]}')
+        print(f'\nУспешно передано:\n{[str(unit) for unit in report["success"]]}')
+        print(f'\nНе найдено на складе:\n{report["errors"]}')
+
+    def search_by(self, type, name=''):
+        if type in self.avail.keys():
+            if not name:
+                return f'\nНа этом складе есть {str(self.quantity[type])} {type}'
+            else:
+                for item in self.avail[type]:
+                    if item.params['name'] == name:
+                        return f'\n{type} {name} обнаружен на этом складе'
+                return f'\nНа этом складе нет {type} {name}'
+        else:
+            return f'\nНа этом складе нет {type}'
 
 
 msk_war = Warehouse('Moscow')
@@ -82,3 +106,8 @@ old_matrix_printer = Printer({'age': 'old', 'made_in': 'Japan', 'method': 'matri
 
 msk_war.add_items([old_lamp_plotter, new_laser_printer, old_matrix_printer, german_scanner])
 msk_war.move_to_filial([old_lamp_plotter, old_matrix_printer, japan_scanner], spb_war)
+
+print(spb_war.search_by('plotter'))
+print(msk_war.search_by('copier'))
+print(msk_war.search_by('printer', 'новый лазерный принтер'))
+print(msk_war.search_by('scanner', 'японский сканер'))
